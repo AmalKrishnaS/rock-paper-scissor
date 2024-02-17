@@ -1,7 +1,7 @@
 
 function computerSelection() {
     const choiceNumber = Math.floor(Math.random()*3) + 1;
-    let computerChoice ;
+    let computerChoice;
     switch (choiceNumber) {
         case 1:
             computerChoice = "rock"; 
@@ -16,7 +16,13 @@ function computerSelection() {
 }
 
 function getPlayerSelection(){
-    const playerChoice = prompt("rock paper scissor", "").toLowerCase();
+    let playerChoice = prompt("rock paper scissor", "").toLowerCase();
+    while (!(playerChoice === "rock"
+           || playerChoice === "paper"
+           || playerChoice === "scissor")){
+        console.log("Please enter Rock, Paper or Scisssor!");
+        playerChoice = prompt("rock paper scissor", "").toLowerCase();
+    }
     return playerChoice;
 }
 
@@ -48,8 +54,8 @@ function playGame(){
     let playerScore = 0;
     let computerScore = 0;
     for (let i=0; i<=4; i++){
-        let playerChoice = getPlayerSelection();
-        let computerChoice = computerSelection();
+        const playerChoice = getPlayerSelection();
+        const computerChoice = computerSelection();
         let roundResult = playRound(playerChoice, computerChoice);
         if (/You/i.test(roundResult)){
             playerScore++;
@@ -59,8 +65,8 @@ function playGame(){
         }
         console.log(roundResult + ", Computer " + computerScore + " You " + playerScore );
     }
-    console.log(playerScore);
-    console.log(computerScore);
+    console.log("Your Score " + playerScore);
+    console.log("Computer Score " + computerScore);
     if (playerScore > computerScore){
         console.log("You Won!!!");
     }
