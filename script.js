@@ -1,5 +1,5 @@
 
-function computerSelection() {
+function getComputerSelection() {
     const choiceNumber = Math.floor(Math.random()*3) + 1;
     let computerChoice;
     switch (choiceNumber) {
@@ -17,14 +17,17 @@ function computerSelection() {
 
 function getPlayerSelection(){
     let playerChoice = prompt("rock paper scissor", "").toLowerCase();
-    while (!(playerChoice === "rock"
-           || playerChoice === "paper"
-           || playerChoice === "scissor")){
+    while (
+        !(playerChoice === "rock" ||
+          playerChoice === "paper" ||
+          playerChoice === "scissor")
+    ){
         console.log("Please enter Rock, Paper or Scisssor!");
         playerChoice = prompt("rock paper scissor", "").toLowerCase();
     }
     return playerChoice;
 }
+
 
 function playRound(playerChoice, computerChoice) {
     console.log(playerChoice, computerChoice);
@@ -55,7 +58,7 @@ function playGame(){
     let computerScore = 0;
     for (let i=0; i<=4; i++){
         const playerChoice = getPlayerSelection();
-        const computerChoice = computerSelection();
+        const computerChoice = getComputerSelection();
         let roundResult = playRound(playerChoice, computerChoice);
         if (/You/i.test(roundResult)){
             playerScore++;
@@ -63,7 +66,7 @@ function playGame(){
         else if(/Computer/i.test(roundResult)) {
             computerScore++;
         }
-        console.log(roundResult + ", Computer " + computerScore + " You " + playerScore );
+        console.log(`${roundResult}, Computer ${computerScore} You ${playerScore}`);
     }
     console.log("Your Score " + playerScore);
     console.log("Computer Score " + computerScore);
@@ -74,7 +77,7 @@ function playGame(){
         console.log("You Lost!");
     }
     else {
-        console.log("It's a draw, you and computer got " + playerScore + " points");
+        console.log(`It's a draw, you and computer got ${playerScore} points`);
     }
 }
 
