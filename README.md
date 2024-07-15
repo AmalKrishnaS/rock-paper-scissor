@@ -15,4 +15,6 @@ scope chain
 variable object
 
 `Author`  
-Amal Krishna S [https://www.frontendmentor.io/profile/AmalKrishnaS]
+Amal Krishna S 
+LinkedIn [https://www.linkedin.com/in/amal-amal-7163b2319/]
+Frontendmentor [https://www.frontendmentor.io/profile/AmalKrishnaS]
