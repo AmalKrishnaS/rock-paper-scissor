@@ -1,84 +1,103 @@
+const rockButton = document.querySelector('#rock');
+const paperButton = document.querySelector('#paper');
+const scissorButton = document.querySelector('#scissor');
 
-function getComputerChoice() {
-  const choiceNumber = Math.floor(Math.random()*3);
-  switch (choiceNumber) {
-      case 0:
-          return 'rock'; 
-      case 1:
-          return 'paper';
-      case 2:
-          return 'scissor';
+const resultLog = document.createElement('div');
+
+rockButton.addEventListener('click', playRound);
+paperButton.addEventListener('click', playRound);
+scissorButton.addEventListener('click', playRound);
+
+let HumanScore = 0;
+let computerScore = 0;
+
+function playRound(event) {
+  let humanChoice = event.currentTarget.id;
+  let computerChoice = getComputerChoice();
+
+  const para = document.createElement('para');
+  const br = document.createElement('br');
+  if (humanChoice===computerChoice) {
+      para.textContent = 'it is a draw';
   }
-}
-
-function getHumanChoice(){
-  let humanChoice = prompt('rock paper scissor', '').toLowerCase();
-  while (!(humanChoice === 'rock' ||humanChoice === 'paper' ||humanChoice === 'scissor')) {
-      humanChoice = prompt('rock paper scissor', '').toLowerCase();
+  else if (humanChoice==='rock') {
+    if (computerChoice==='scissor'){
+      para.textContent = 'rock beat paper, You won this round';
+      HumanScore++;
+    }
+    else {
+      para.textContent = 'paper beat rock, computer won this round';
+      computerScore++;
+    }
   }
-  return humanChoice;
-}
-
-function playGame(){
-  let HumanScore = 0;
-  let computerScore = 0;
-
-  function playRound(humanChoice, computerChoice) {
-      if (humanChoice===computerChoice) {
-          console.log('it is a draw');
-        }
-        else if (humanChoice==='rock') {
-          if (computerChoice==='scissor'){
-            console.log('rock beat paper, You won this round');
-            HumanScore++;
-          }
-          else {
-            console.log('paper beat rock, computer won this round');
-            computerScore++;
-          }
-        }
-        else if (humanChoice==='paper') {
-          if (computerChoice==='rock') {
-            console.log('paper beats rock, You won this round');
-            HumanScore++;
-          }
-          else {
-            console.log('scissor beats paper, computer won this round');
-            computerScore++;
-          }
-        }
-        else {
-          if (computerChoice==='paper'){
-            console.log('scissor beats paper, You won this round');
-            HumanScore++;
-          }
-          else {
-            console.log('rock beats scissor, computer won this round');
-            computerScore++;
-          }
-      }
+  else if (humanChoice==='paper') {
+    if (computerChoice==='rock') {
+      para.textContent = 'paper beats rock, You won this round';
+      HumanScore++;
+    }
+    else {
+      para.textContent = 'scissor beats paper, computer won this round';
+      computerScore++;
+    }
+  }
+  else {
+    if (computerChoice==='paper'){
+      para.textContent = 'scissor beats paper, You won this round';
+      HumanScore++;
+    }
+    else {
+      para.textContent = 'rock beats scissor, computer won this round';
+      computerScore++;
+    }
   }
 
-  for (let i=1; i<=5; i++){
-      const humanChoice = getHumanChoice();
-      const computerChoice = getComputerChoice();
-      playRound(humanChoice, computerChoice);
-      console.log(`Round ${i} : Computer ${computerScore} You ${HumanScore}`);
+  function getComputerChoice() {
+    const choiceNumber = Math.floor(Math.random()*3);
+    switch (choiceNumber) {
+        case 0:
+            return 'rock'; 
+        case 1:
+            return 'paper';
+        case 2:
+            return 'scissor';
+    }
   }
 
-  function findAndLogWinner(HumanScore, computerScore) {
-      if (HumanScore > computerScore) {
-          console.log('You won the Game!!!');
-      }
-      else if (computerScore > HumanScore) {
-          console.log('You lost the Game, better luck next time');
+  function displayScore(){
+    const para = document.createElement('p');
+    para.textContent = `Your score : ${HumanScore}
+                        Computer score : ${computerScore}`;
+    resultLog.appendChild(para);
+  }
+
+  function checkAndLogWinner() {
+    if (HumanScore===5||computerScore===5) {
+      const para = document.createElement('p');
+      const gameEndedMessage = document.createElement('p');
+      
+      if (HumanScore===5) {
+        para.textContent += 'You have reached 5 points you won the game';
       }
       else {
-          console.log('Game ended in a draw!');
+        para.textContent += 'Computer have reached 5 points computer won the game, better luck next time';
       }
+      HumanScore = 0;
+      computerScore = 0;
+
+      gameEndedMessage.textContent = 'Game Ended';
+
+      resultLog.appendChild(para);
+      resultLog.appendChild(gameEndedMessage);
+    }
   }
 
-  findAndLogWinner(HumanScore, computerScore);
+  resultLog.appendChild(para);
+  
+  displayScore();
+  checkAndLogWinner();
+
+  document.body.appendChild(resultLog);
 }
 
-playGame();
+
+
